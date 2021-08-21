@@ -12,7 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Domain.Domain.Interfaces;
+using Infraestructure.Data.Repositories;
+using Application.Main.Services;
 namespace WebApplication1
 {
     public class Startup
@@ -30,8 +32,9 @@ namespace WebApplication1
         {
 
             services.AddControllers();
-            services.AddSingleton<DapperContext>(provider => new DapperContext(Configuration,Configuration.GetConnectionString("SqlConnection")));
-            
+            services.AddSingleton<DapperContext>();
+            services.AddScoped<ICompanyRepository,CompanyRepository>();            
+            services.AddScoped<ICompanyService,CompanyService>();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
