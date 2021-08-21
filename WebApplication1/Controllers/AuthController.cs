@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Domain.Entities;
 using Domain.Entities.Models;
 using Domain.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
+
 namespace WebApplication1.Controllers
 {
     [ApiController]
@@ -24,9 +26,20 @@ namespace WebApplication1.Controllers
 
         [HttpGet]
         [Route("getCompanies")]
-        public ActionResult<IEnumerable<Company>> Get()
+        public ActionResult<IEnumerable<Company>> GetCompanies()
         {
              return Ok(objCompany.GetAll());            
+        }
+        
+        [HttpGet]
+        [Route("getCompanyById/{id:int}")]
+        public ActionResult<IEnumerable<Company>> GetCompanyById(int id)
+        {
+            Company company = objCompany.GetById(id);
+            
+            if(company == null) return StatusCode(StatusCodes.Status404NotFound,"Error retrieving data from the database");
+
+            return Ok(objCompany.GetById(id));            
         }
     }
 }

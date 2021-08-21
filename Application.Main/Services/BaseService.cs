@@ -19,9 +19,14 @@ namespace Application.Main.Services
             this.baseRepository = baseRepository;
         }
 
-         public IEnumerable<TEntity> GetAll()
+        public IEnumerable<TEntity> GetAll()
         {
             return baseRepository.GetAll();
+        }
+
+        public TEntity GetById(int id)
+        {
+            return baseRepository.GetById(id);
         }
     }
 }

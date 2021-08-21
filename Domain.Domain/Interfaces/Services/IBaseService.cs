@@ -9,5 +9,6 @@ namespace Domain.Domain.Interfaces
     public interface IBaseService<TEntity> where TEntity:class
     {
         IEnumerable<TEntity> GetAll();
+        TEntity GetById(int id);
     }
 }

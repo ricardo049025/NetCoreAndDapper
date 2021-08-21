@@ -14,7 +14,7 @@ namespace Domain.Domain.Interfaces
     public interface IBaseRepository<TEntity> where TEntity : class
     {
         IEnumerable<TEntity> GetAll();
-        //TEntity GetById(int id);
+        TEntity GetById(int id);
         //void Add(TEntity entity);
         //void Update(TEntity entity);
         //void Delete(int id);

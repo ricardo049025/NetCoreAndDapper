@@ -27,5 +27,14 @@ namespace Infraestructure.Data.Repositories
             }
             
         }
+
+        public TEntity GetById(int id)
+        {
+            string query = string.Format("SELECT * FROM {0} where Id = {1}", typeof(TEntity).Name,id);
+            using (var connection = context.CreateConnection())
+            {
+                return connection.QuerySingleOrDefault<TEntity>(query);                
+            }
+        }
     }
 }
