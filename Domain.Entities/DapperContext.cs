@@ -14,10 +14,10 @@ namespace Domain.Entities
         private readonly IConfiguration configuration;
         private readonly string connection;
 
-        public DapperContext(IConfiguration configuration, string connection)
+        public DapperContext(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.connection = connection;
+            this.connection = this.configuration.GetConnectionString("SqlConnection");
         }
 
         public IDbConnection CreateConnection() => new SqlConnection(this.connection);
