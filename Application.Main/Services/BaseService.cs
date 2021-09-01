@@ -33,5 +33,16 @@ namespace Application.Main.Services
         {
             this.baseRepository.Add(entity);
         }
+
+        public void Update(int id, TEntity entity)
+        {
+            this.baseRepository.Update(id,entity);
+        }
+
+        public void Delete(int id)
+        {
+            this.baseRepository.Delete(id);
+        }
+
     }
 }

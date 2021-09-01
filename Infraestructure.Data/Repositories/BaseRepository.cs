@@ -22,7 +22,7 @@ namespace Infraestructure.Data.Repositories
 
         public IEnumerable<TEntity> GetAll()
         {
-            string query = string.Format("SELECT * FROM {0} ", typeof(TEntity).Name);
+            string query = $"SELECT * FROM {typeof(TEntity).Name}";
             using (var connection = context.CreateConnection())
             {
                 return connection.Query<TEntity>(query);                
@@ -31,8 +31,8 @@ namespace Infraestructure.Data.Repositories
         }
 
         public TEntity GetById(int id)
-        {
-            string query = string.Format("SELECT * FROM {0} where Id = {1}", typeof(TEntity).Name,id);
+        {            
+            string query = $"SELECT * FROM {typeof(TEntity).Name} where Id = {id}";
             using (var connection = context.CreateConnection())
             {
                 return connection.QuerySingleOrDefault<TEntity>(query);                
@@ -45,8 +45,8 @@ namespace Infraestructure.Data.Repositories
             StringBuilder builquery = new StringBuilder();
             string query = string.Empty;
 
-            builquery.AppendLine(string.Format("INSERT INTO {0} ({1})", typeof(TEntity).Name, SqlGenericHelper<TEntity>.getObjectPropertiesToStrig(entity)));
-            builquery.AppendLine(string.Format("SELECT {0} ", SqlGenericHelper<TEntity>.getObjectPropertiesToStrigWithValues(entity)));
+            builquery.AppendLine($"INSERT INTO {typeof(TEntity).Name} ({SqlGenericHelper<TEntity>.getObjectPropertiesToStrig(entity)})" );
+            builquery.AppendLine($"SELECT {SqlGenericHelper<TEntity>.getObjectPropertiesToStrigWithValues(entity)} ");
             query = builquery.ToString();
 
             using (var connection = context.CreateConnection())
@@ -56,6 +56,31 @@ namespace Infraestructure.Data.Repositories
 
         }
 
+        public void Update(int id,TEntity entity)
+        {
+            int updated = 0;
+            StringBuilder builquery = new StringBuilder();
+            string query = string.Empty;
 
+            builquery.AppendLine($"UPDATE {typeof(TEntity).Name} SET {SqlGenericHelper<TEntity>.getObjectPropertiesToStrigWithUpdateValues(entity)}" );
+            builquery.AppendLine($"WHERE Id = {id}");
+            query = builquery.ToString();
+
+            using (var connection = context.CreateConnection())
+            {
+                updated += connection.Execute(query);                
+            }
+
+        }
+
+        public void Delete(int id)
+        {
+            int deleted = 0;
+            string query = $"DELETE FROM {typeof(TEntity).Name} where Id = {id}";
+            using (var connection = context.CreateConnection())
+            {
+                deleted += connection.Execute(query);                
+            }
+        }
     }
 }

@@ -16,6 +16,6 @@ namespace Domain.Entities.Models
         public bool Status { set; get; }
         
         [Description("Ignore")]
-        public List<Employee> Employees { set; get; } = new List<Employee>();
+        public virtual List<Employee> Employees { set; get; } = new List<Employee>();
     }
 }

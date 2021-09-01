@@ -39,7 +39,7 @@ namespace WebApplication1.Controllers
             
             if(company == null) return StatusCode(StatusCodes.Status404NotFound,"Error retrieving data from the database");
 
-            return Ok(objCompany.GetById(id));            
+            return Ok(company);            
         }
 
         [HttpPost]
@@ -49,7 +49,49 @@ namespace WebApplication1.Controllers
             try
             {
                 objCompany.Add(company);
-                return Ok();
+                return Ok("Added");
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpPut]
+        [Route("UpdateCompany/{id:int}")]
+        public ActionResult UpdateCompany(int id,[FromBody]Company company)
+        {
+            try
+            {
+                Company comp = objCompany.GetById(id);
+            
+                if(comp == null) return StatusCode(StatusCodes.Status404NotFound,"Error retrieving data from the database");
+
+                objCompany.Update(id,company);
+                
+                return Ok("Updated");
+
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
+
+        [HttpDelete]
+        [Route("DeleteCompany/{id:int}")]
+        public ActionResult DeleteCompany(int id)
+        {
+            try
+            {
+                Company comp = objCompany.GetById(id);
+            
+                if(comp == null) return StatusCode(StatusCodes.Status404NotFound,"Error retrieving data from the database");
+
+                objCompany.Delete(id);
+                
+                return Ok("Deleted");
+
             }
             catch (System.Exception ex)
             {
