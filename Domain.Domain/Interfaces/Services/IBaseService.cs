@@ -10,5 +10,6 @@ namespace Domain.Domain.Interfaces
     {
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);
+        void Add(TEntity entity);
     }
 }
