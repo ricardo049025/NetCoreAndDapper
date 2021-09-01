@@ -28,5 +28,10 @@ namespace Application.Main.Services
         {
             return baseRepository.GetById(id);
         }
+
+        public void Add(TEntity entity)
+        {
+            this.baseRepository.Add(entity);
+        }
     }
 }

@@ -7,6 +7,8 @@ using Dapper;
 using Domain.Domain.Interfaces;
 using Domain.Entities;
 using Domain.Entities.Models;
+using Application.Main.Helpers;
+
 namespace Infraestructure.Data.Repositories
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
@@ -36,5 +38,24 @@ namespace Infraestructure.Data.Repositories
                 return connection.QuerySingleOrDefault<TEntity>(query);                
             }
         }
+
+        public void Add(TEntity entity)
+        {
+            int inserted = 0;
+            StringBuilder builquery = new StringBuilder();
+            string query = string.Empty;
+
+            builquery.AppendLine(string.Format("INSERT INTO {0} ({1})", typeof(TEntity).Name, SqlGenericHelper<TEntity>.getObjectPropertiesToStrig(entity)));
+            builquery.AppendLine(string.Format("SELECT {0} ", SqlGenericHelper<TEntity>.getObjectPropertiesToStrigWithValues(entity)));
+            query = builquery.ToString();
+
+            using (var connection = context.CreateConnection())
+            {
+                inserted += connection.Execute(query);                
+            }
+
+        }
+
+
     }
 }

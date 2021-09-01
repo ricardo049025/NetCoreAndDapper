@@ -41,5 +41,20 @@ namespace WebApplication1.Controllers
 
             return Ok(objCompany.GetById(id));            
         }
+
+        [HttpPost]
+        [Route("AddCompany")]
+        public ActionResult AddCompany([FromBody]Company company)
+        {
+            try
+            {
+                objCompany.Add(company);
+                return Ok();
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
